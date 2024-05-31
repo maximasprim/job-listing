@@ -18,6 +18,11 @@ main {
     margin: 20px auto;
     padding: 0 20px;
 }
+.tag{
+    border: 1px solid  white;
+    background-color: rgb(201, 198, 198);
+    gap: 2px;
+}
 
 .filters {
     display: flex;
