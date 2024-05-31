@@ -1,0 +1,124 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2fa;
+}
+
+header {
+    background-color: #5ba4a4;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter {
+    background-color: #eef6f6;
+    border: 1px solid #5ba4a4;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.filter.active {
+    background-color: #5ba4a4;
+    color: white;
+}
+
+.job-listings {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.job-card {
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.job-card .job-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.job-card .job-header img {
+    width: 50px;
+    height: 50px;
+}
+
+.job-card .company-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.job-card .new-featured {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.job-card .new,
+.job-card .featured {
+    background-color: #5ba4a4;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.job-card .job-position {
+    font-size: 20px;
+    font-weight: bold;
+    color: #5ba4a4;
+}
+
+.job-card .job-details,
+.job-card .job-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.job-details{
+    display: flex;
+    justify-content: space-between;
+}
+
+.job-card .job-tags .tag {
+    background-color: #eef6f6;
+    border: 1px solid #5ba4a4;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.job-card .job-tags .tag:hover {
+    background-color: #5ba4a4;
+    color: white;
+}
+
+.job-card .job-info {
+    display: flex;
+    gap: 10px;
+}
