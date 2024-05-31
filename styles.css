@@ -20,8 +20,24 @@ main {
 }
 .tag{
     border: 1px solid  white;
-    background-color: rgb(201, 198, 198);
+    background-color: rgb(228, 244, 245);
     gap: 2px;
+    border-radius: 2px;
+}
+#role-filters{
+    gap: 10px;
+}
+
+button {
+    padding: px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+#filter-container{
+    width: 100%;
 }
 
 .filters {

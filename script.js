@@ -4,12 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const levelFiltersContainer = document.getElementById('level-filters');
     const languageFiltersContainer = document.getElementById('language-filters');
     const toolFiltersContainer = document.getElementById('tool-filters');
+    const newButton = document.getElementById('new-button');
+    const featuredButton = document.getElementById('featured-button');
+    const allJobsButton = document.querySelector('.job-category-button[data-category="all"]');
 
     let filters = {
         role: [],
         level: [],
         languages: [],
-        tools: []
+        tools: [],
+        new: false,
+        featured: false
     };
 
     // Fetch data from data.json file
@@ -26,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const jobCard = document.createElement('div');
                 jobCard.classList.add('job-card');
 
-                const newTag = job.new ? `<span class="new">New!</span>` : '';
-                const featuredTag = job.featured ? `<span class="featured">Featured</span>` : '';
+                const newTag = job.new ? `<button class="tag" data-type="new">New!</button>` : '';
+                const featuredTag = job.featured ? `<button class="tag" data-type="featured">Featured</button>` : '';
 
                 jobCard.innerHTML = `
                     <div class="job-header">
@@ -45,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <button class="tag" data-type="role" data-value="${job.role}">${job.role}</button>
                                 <button class="tag" data-type="level" data-value="${job.level}">${job.level}</button>
                                 ${job.languages.map(language => `<button class="tag" data-type="language" data-value="${language}">${language}</button>`).join('')}
+                                ${job.tools.map(tool => `<button class="tag" data-type="tool" data-value="${tool}">${tool}</button>`).join('')}
                             </div>
                         </div>
                     </div>
@@ -60,6 +66,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Render filter buttons
             renderFilters(data);
+
+            // Add event listeners to new and featured buttons
+            newButton.addEventListener('click', () => {
+                toggleFilter('new', null);
+            });
+            featuredButton.addEventListener('click', () => {
+                toggleFilter('featured', null);
+            });
+            allJobsButton.addEventListener('click', () => {
+                clearFilters();
+            });
         })
         .catch(error => {
             console.error('There was a problem fetching the data:', error);
@@ -89,11 +106,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function toggleFilter(type, value) {
-        if (filters[type].includes(value)) {
-            filters[type] = filters[type].filter(item => item !== value);
+        if (type === 'new' || type === 'featured') {
+            filters[type] = !filters[type];
         } else {
-            filters[type].push(value);
+            if (filters[type].includes(value)) {
+                filters[type] = filters[type].filter(item => item !== value);
+            } else {
+                filters[type].push(value);
+            }
         }
+        filterJobListings();
+    }
+
+    function clearFilters() {
+        filters = {
+            role: [],
+            level: [],
+            languages: [],
+            tools: [],
+            new: false,
+            featured: false
+        };
         filterJobListings();
     }
 
@@ -104,12 +137,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const level = card.querySelector('.tag[data-type="level"]').dataset.value;
             const languages = [...card.querySelectorAll('.tag[data-type="language"]')].map(tag => tag.dataset.value);
             const tools = [...card.querySelectorAll('.tag[data-type="tool"]')].map(tag => tag.dataset.value);
+            const isNew = card.querySelector('.tag[data-type="new"]');
+            const isFeatured = card.querySelector('.tag[data-type="featured"]');
 
             if (
-                filters.role.length === 0 || filters.role.includes(role)
-                && filters.level.length === 0 || filters.level.includes(level)
+                (filters.role.length === 0 || filters.role.includes(role))
+                && (filters.level.length === 0 || filters.level.includes(level))
                 && filters.languages.every(lang => languages.includes(lang))
                 && filters.tools.every(tool => tools.includes(tool))
+                && (!filters.new || isNew)
+                && (!filters.featured || isFeatured)
             ) {
                 card.style.display = 'block';
             } else {
